@@ -1,18 +1,10 @@
 defmodule AdventOfCode do
-  @moduledoc """
-  Documentation for `AdventOfCode`.
-  """
+  def main(args) do
+    [day, part] = args
 
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> AdventOfCode.hello()
-      :world
-
-  """
-  def main(_args) do
-    IO.puts("hello world")
+    {:ok, input_file} = File.read("inputs/day#{day}.txt")
+    module = String.to_existing_atom("Elixir.Day#{day}")
+    result = apply(module, :solve, [input_file, part])
+    IO.puts(result)
   end
 end

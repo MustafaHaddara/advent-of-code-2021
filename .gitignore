@@ -24,3 +24,10 @@ aoc-*.tar
 
 # Temporary files, for example, from tests.
 /tmp/
+
+# Compiled app
+AdventOfCode
+
+# Advent of Code input files
+# (the advent of code organizers prefer it if we don't share these)
+inputs/
