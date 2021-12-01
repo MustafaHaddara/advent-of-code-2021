@@ -3,8 +3,9 @@ defmodule AdventOfCode do
     [_, day, part] = System.argv()
 
     {:ok, input_file} = File.read("inputs/day#{day}.txt")
+    input_data = input_file |> String.split("\n", trim: true)
     module = String.to_existing_atom("Elixir.Day#{day}")
-    result = apply(module, :solve, [input_file, part])
+    result = apply(module, :solve, [input_data, part])
     IO.puts(result)
   end
 
