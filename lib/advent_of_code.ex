@@ -7,4 +7,11 @@ defmodule AdventOfCode do
     result = apply(module, :solve, [input_file, part])
     IO.puts(result)
   end
+
+  def test() do
+    [_, day, part] = System.argv()
+    module = String.to_existing_atom("Elixir.Day#{day}")
+    result = apply(module, :test, [part])
+    IO.puts(result)
+  end
 end
