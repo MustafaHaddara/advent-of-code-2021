@@ -91,28 +91,23 @@ defmodule Day3 do
 
   # part 2
   defp filter_o2(lines, idx) do
-    target = most_common_in_pos(lines, idx)
-
-    next_lines =
-      lines
-      |> Enum.filter(fn l -> list_get(l, idx) == target end)
-
-    case length(next_lines) do
-      1 -> hd(next_lines)
-      _ -> filter_o2(next_lines, idx + 1)
-    end
+    filter_for_target(lines, idx, &most_common_in_pos/2)
   end
 
   defp filter_co2(lines, idx) do
-    target = least_common_in_pos(lines, idx)
+    filter_for_target(lines, idx, &least_common_in_pos/2)
+  end
+
+  defp filter_for_target(lines, idx, target_func) do
+    target = target_func.(lines, idx)
 
     next_lines =
       lines
-      |> Enum.filter(fn l -> list_get(l, idx) == target end)
+      |> Enum.filter(fn l -> Enum.at(l, idx) == target end)
 
     case length(next_lines) do
       1 -> hd(next_lines)
-      _ -> filter_co2(next_lines, idx + 1)
+      _ -> filter_for_target(next_lines, idx + 1, target_func)
     end
   end
 
@@ -136,18 +131,10 @@ defmodule Day3 do
 
   defp freqs(l, idx) do
     Enum.reduce(l, [0, 0], fn x, [zeroes, ones] ->
-      case list_get(x, idx) do
+      case Enum.at(x, idx) do
         "0" -> [zeroes + 1, ones]
         "1" -> [zeroes, ones + 1]
       end
     end)
-  end
-
-  defp list_get(l, idx) when idx == 0 do
-    hd(l)
-  end
-
-  defp list_get(l, idx) do
-    list_get(tl(l), idx - 1)
   end
 end
